@@ -63,6 +63,8 @@ To use this template you need to have the following installed on your system:
    npm run watch
    ```
 
+   _You can run also run a once off build:_ `npm run build`
+
 5. Edit the `src` files
 
    _The `index.ts` contains an example expression setup._
