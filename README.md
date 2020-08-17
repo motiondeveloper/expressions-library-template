@@ -96,6 +96,9 @@ There a couple of files you may wish to change to reflect the content of your pr
 
 - `README.md`
 - `rollup.config.js`: The `output.file` name
+
+  _The release script in `package.json` needs to match the output file name._
+
 - `package.json`: `name`, `description`, `repo`, `author`
 
 ## How
