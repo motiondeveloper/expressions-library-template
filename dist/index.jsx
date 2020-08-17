@@ -1,16 +1,6 @@
 {
-	"defaultFunction": function() {
-	    return 'Default Function Value';
-	},
-	
-	"anotherFunction": function() {
-	    return 'Another Function';
-	},
-	
-	// Import values from other files
-	// Or define values in index
-	"localFunction": function() {
+	"someFunction": function() {
 	    return 'Local Function';
 	},
-	"localValue":  2,
+	"someValue":  2,
 }

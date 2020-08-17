@@ -25,7 +25,6 @@
 
 **This repo is a template for creating expression libraries, that enables you to:**
 
-- Split code into multiple files, which are then bundled together
 - Write in [TypeScript](https://www.typescriptlang.org/) (`.ts` files)
 - Write syntactically correct JavaScript, allowing:
   - Testing
@@ -65,7 +64,7 @@ To use this template you need to have the following installed on your system:
 
    _You can run also run a once off build:_ `npm run build`
 
-5. Edit the `src` files
+5. Edit the `src` file
 
    _The `index.ts` contains an example expression setup._
 
@@ -96,8 +95,8 @@ To use this template you need to have the following installed on your system:
 There a couple of files you may wish to change to reflect the content of your project:
 
 - `README.md`
+- `rollup.config.js`: The `output.file` name
 - `package.json`: `name`, `description`, `repo`, `author`
-- `rollup.config.js`: The `input` file and `output.file` names and locations
 
 ## How
 
@@ -107,4 +106,4 @@ There a couple of files you may wish to change to reflect the content of your pr
 
 - The Rollup plugin [rollup-plugin-ae-jsx](https://www.npmjs.com/package/rollup-plugin-ae-jsx) transforms the JavaScript output into After Effects JSON (`.jsx`) compliant syntax
 
-  _Since this transformation doesn't produce valid JavaScript, it must be done on the output code rather than the AST. This means you need to stick closely to a specific project structure and formatting. If you know a more robust way of doing it, please let us know!_
+  _The rollup plugin is still experimental, and updated regularly. It currently doesn't allow for splitting your expression into multiple files_
