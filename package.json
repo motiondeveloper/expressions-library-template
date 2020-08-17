@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "build": "rollup -c",
     "watch": "rollup -cw",
-    "release": "hub release create -a 'dist/eKeys.jsx'"
+    "release": "hub release create -a 'dist/index.jsx'"
   },
   "repository": {
     "type": "git",
