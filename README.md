@@ -105,16 +105,24 @@ To use this template you need to have the following installed on your system:
 
 > This template uses the [`expression-globals-typescript`](https://github.com/motiondeveloper/expression-globals-typescript) package to provide types for the expressions API.
 
-### Base Objects
+### Classes
 
-To create layers, compositions and properties, you can create objects from the "Base" objects exported from the library. For example:
+To create layers, compositions and properties, you can use the classes exported from the library. For example:
 
 ```ts
-import { CompBase, Comp } from 'expression-globals-typescript';
-const thisComp: Comp = Object.create(CompBase);
+import { Comp, Layer } from 'expression-globals-typescript';
+const thisComp = new Comp();
+const thisLayer = new Layer();
 ```
 
-`thisComp` will have it's prototype set to `CompBase`, so you can access any composition property and methods.
+To create properties (such as position or scale), you can use the `Property` class.
+
+```ts
+import { Property, Vector } from 'expression-globals-typescript';
+const thisProperty = new Property<Vector>([0, 100]);
+```
+
+> The `Property` constructor takes a value to set as the property value, and a type (`<>`) to set as the type for the property.
 
 ### Global Functions and Variables
 
@@ -128,7 +136,7 @@ import { time, linear } from 'expression-globals-typescript';
 
 ### After Effects Types
 
-You can import After Effect's specific types such as `Comp`, `Layer`, `Color` and `Vector` from the package to properly type your expressions.
+You can import After Effect's specific types such as `Color` and `Vector` from the package to properly type your expressions.
 
 #### _To see all the Types and Base Objects available, see the [`expression-globals-typescript`](https://github.com/motiondeveloper/expression-globals-typescript) source code._
 
@@ -141,7 +149,7 @@ There a couple of files you may wish to change to reflect the content of your pr
 
   _The release script in `package.json` needs to match the output file name._
 
-- `package.json`: `name`, `description`, `repo`, `author`
+- `package.json`: `name`, `description`, `repo`, `author` and `version`
 
 ## How
 

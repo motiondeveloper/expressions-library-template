@@ -1,10 +1,10 @@
 // Importing object bases (CompBase, LayerBase, PropertyBase)
 // TypeScript types (Layer, Comp, Value, Color etc)
 // and global functions from 'expression-globals-typescript'
-import { CompBase, Comp, Layer, linear } from 'expression-globals-typescript';
+import { Comp, Layer, linear } from 'expression-globals-typescript';
 
 // Creating a new composition object from CompBase
-const thisComp: Comp = Object.create(CompBase);
+const thisComp = new Comp();
 
 // Using the expression types in a function
 function getLayerDuration(layerName: string) {
