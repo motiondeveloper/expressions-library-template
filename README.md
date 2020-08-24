@@ -94,12 +94,12 @@ To use this template you need to have the following installed on your system:
    To distribute your output file using Github releases (via [Hub](https://github.com/github/hub)), use the command:
 
    ```sh
-   npm run release -- releaseNum
+   npm run release
    ```
 
    > This will open an editor to add the release title and description
 
-   Where `releaseNum` is the tag version number, e.g. `1.0.0`.
+   The release version number is the `"version"` in `package.json`.
 
 ## After Effects API
 

@@ -1,6 +1,6 @@
 {
   "name": "expressions-library-template",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A template repo for creating After Effects expression libraries (.jsx files) using TypeScript and Rollup ",
   "main": "index.js",
   "scripts": {
