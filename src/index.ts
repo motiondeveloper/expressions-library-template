@@ -17,11 +17,11 @@ function remap(value: number) {
   return linear(value, 0, 10, 0, 1);
 }
 
-function someFunction(): string {
-  return 'Local Function';
+function welcome(name: string): string {
+  return `Welcome ${name}!`;
 }
 
 const someValue: number = 2;
 
 // Export values to appear in jsx files
-export { getLayerDuration, remap, someFunction, someValue };
+export { getLayerDuration, remap, welcome, someValue };

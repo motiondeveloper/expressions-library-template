@@ -29,7 +29,7 @@
 
 - Write in [TypeScript](https://www.typescriptlang.org/) (`.ts` files)
 - Write syntactically correct JavaScript, allowing:
-  - Testing
+  - [Testing](#testing)
   - Linting
   - Automatic formatting
 
@@ -140,6 +140,30 @@ You can import After Effect's specific types such as `Color` and `Vector` from t
 
 #### _To see all the Types and Base Objects available, see the [`expression-globals-typescript`](https://github.com/motiondeveloper/expression-globals-typescript) source code._
 
+## Testing
+
+You can test your expression library code using [Jest](https://jestjs.io/), which comes pre-configured in this template repo.
+
+You write tests in the `index.test.ts` file, importing the code you want to test from `index.ts`, for example:
+
+```ts
+import { welcome } from './index';
+
+test('returns correct welcome string', () => {
+  expect(welcome('test')).toEqual('Welcome test!');
+});
+```
+
+And then run the test suite:
+
+```sh
+npm run test
+```
+
+Which will run Jest in watch mode.
+
+> You can learn more about testing using Jest from the [Jest docs](https://jestjs.io/docs/en/getting-started).
+
 ## Configuration
 
 There a couple of files you may wish to change to reflect the content of your project:
@@ -162,3 +186,5 @@ There a couple of files you may wish to change to reflect the content of your pr
 - The Rollup plugin [rollup-plugin-ae-jsx](https://www.npmjs.com/package/rollup-plugin-ae-jsx) transforms the JavaScript output into After Effects JSON (`.jsx`) compliant syntax
 
   _The rollup plugin is still experimental, and updated regularly. It currently doesn't allow for splitting your expression into multiple files_
+
+- Testing via [Jest](https://jestjs.io/), and [ts-jest](https://github.com/kulshekhar/ts-jest)

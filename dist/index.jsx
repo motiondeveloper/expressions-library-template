@@ -7,8 +7,8 @@
 	"remap": function(value) {
 	    return linear(value, 0, 10, 0, 1);
 	},
-	"someFunction": function() {
-	    return 'Local Function';
+	"welcome": function(name) {
+	    return `Welcome ${name}!`;
 	},
-	"someValue":  2,
+	"someValue":  2
 }
