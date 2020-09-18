@@ -99,7 +99,7 @@ To use this template you need to have the following installed on your system:
 
    > This will open an editor to add the release title and description
 
-   The release version number is the `"version"` in `package.json`.
+   The release version number is the `"version"` in `package.json`, and it will attach the `"main"` file to the release.
 
 ## After Effects API
 
@@ -169,11 +169,8 @@ Which will run Jest in watch mode.
 There a couple of files you may wish to change to reflect the content of your project:
 
 - `README.md`
-- `rollup.config.js`: The `output.file` name
 
-  _The release script in `package.json` needs to match the output file name._
-
-- `package.json`: `name`, `description`, `repo`, `author` and `version`
+- `package.json`: `name`, `description`, `repo`, `author`, `version` and `main`
 
 ## How
 
