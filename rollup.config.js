@@ -1,10 +1,11 @@
 import typescript from '@rollup/plugin-typescript';
 import afterEffectJsx from 'rollup-plugin-ae-jsx';
+import pkg from './package.json';
 
 export default {
   input: 'src/index.ts',
   output: {
-    file: 'dist/index.jsx',
+    file: pkg.main,
     format: 'cjs',
   },
   plugins: [
