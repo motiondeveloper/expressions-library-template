@@ -11,5 +11,5 @@
 	    return `Welcome ${name}!`;
 	},
 	"someValue":  2,
-	"version":  '1.2.3'
+	"version":  '1.2.2'
 }
