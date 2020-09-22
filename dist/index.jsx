@@ -10,5 +10,6 @@
 	"welcome": function(name) {
 	    return `Welcome ${name}!`;
 	},
-	"someValue":  2
+	"someValue":  2,
+	"version":  '1.2.2'
 }

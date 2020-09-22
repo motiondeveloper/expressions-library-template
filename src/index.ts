@@ -23,5 +23,7 @@ function welcome(name: string): string {
 
 const someValue: number = 2;
 
+const version: string = '_npmVersion';
+
 // Export values to appear in jsx files
-export { getLayerDuration, remap, welcome, someValue };
+export { getLayerDuration, remap, welcome, someValue, version };
