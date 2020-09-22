@@ -40,7 +40,7 @@ To use this template you need to have the following installed on your system:
 - [Node](https://nodejs.org/en/)
 - [Git](https://git-scm.com/)
 - [VS Code](https://code.visualstudio.com/) (recommended)
-- [Hub](https://github.com/github/hub) (recommended)
+- [GitHub CLI](https://github.com/cli/cli) (recommended)
 
 > This setup works well for our workflow and requirements, but is still in the early stages. It is most likely unnecessary for smaller projects or beginners
 
@@ -97,9 +97,11 @@ To use this template you need to have the following installed on your system:
    npm run release
    ```
 
-   > This will open an editor to add the release title and description
+   This will use the GitHub CLI to create a new tag and release
 
    The release version number is the `"version"` in `package.json`, and it will attach the `"main"` file to the release.
+
+   > You can add this version to the output file by placing the string `_npmVersion` in your code, which will be replaced with the version number in `package.json` at build time.
 
 ## After Effects API
 
@@ -168,9 +170,12 @@ Which will run Jest in watch mode.
 
 There a couple of files you may wish to change to reflect the content of your project:
 
-- `README.md`
-
-- `package.json`: `name`, `description`, `repo`, `author`, `version` and `main`
+- `package.json`:
+  - `version`: The current version of the library, which is used for releases and added to `dist` files.
+  - `main`: The build output file which will be attached to releases
+- `rollup.config.js`:
+  - `input`: The source file to be built
+  - `typescript()`: Custom typescript compiler options
 
 ## How
 
