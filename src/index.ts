@@ -1,11 +1,11 @@
-import { Comp, Layer, linear } from 'expression-globals-typescript';
+import { Comp, Layer, linear, time } from 'expression-globals-typescript';
 import { someValue, someFunction } from './externalFile';
 
 const thisComp = new Comp();
 
 function getLayerDuration(layerName: string) {
   const layer: Layer = thisComp.layer(layerName);
-  return layer.outPoint - layer.inPoint;
+  return layer.outPoint - layer.inPoint + time;
 }
 
 function remap(value: number) {
@@ -20,4 +20,4 @@ function welcome(name: string): string {
 
 const version: string = '_npmVersion';
 
-export { getLayerDuration, remap, welcome, someValue, someFunction, version };
+export { someValue, someFunction, getLayerDuration, remap, welcome, version };

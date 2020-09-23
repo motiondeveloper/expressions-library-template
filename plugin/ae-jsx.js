@@ -74,35 +74,42 @@ export default function afterEffectsJsx(options = {}) {
               configurable: true,
             });
 
-            // Remove non-exported functions
             if (node.type === 'FunctionDeclaration') {
               const functionName = node.id.name;
               if (!exports.includes(functionName)) {
+                // Remove non-exported functions
                 remove(node.start, node.end);
+              } else {
+                console.log(node);
+                magicString.remove(node.start, node.id.start);
+                magicString.prependRight(node.end, ',');
               }
               this.skip();
-              // Remove variables that aren't exported
             } else if (node.type === 'VariableDeclaration') {
               const variableName = node.declarations.map(
                 declaration => declaration.id.name
               )[0];
               if (!exports.includes(variableName)) {
+                // Remove variables that aren't exported
                 remove(node.start, node.end);
-                this.skip();
+              } else {
+                const valueStart = node.declarations[0].init.start;
+                const variableName = node.declarations[0].id.name;
+                magicString.overwrite(
+                  node.start,
+                  valueStart - 1,
+                  `${variableName}:`
+                );
+                const endsInSemiColon =
+                  magicString.slice(node.end - 1, node.end) === ';';
+                if (endsInSemiColon) {
+                  magicString.overwrite(node.end - 1, node.end, ',');
+                } else {
+                  magicString.prependRight(node.end, ',');
+                }
               }
-            }
-          },
-        });
-
-        // Remove expression and debugger statements
-        walk(ast, {
-          enter(node, parent) {
-            Object.defineProperty(node, 'parent', {
-              value: parent,
-              enumerable: false,
-              configurable: true,
-            });
-            if (node.type === 'ExpressionStatement') {
+              this.skip();
+            } else if (node.type === 'ExpressionStatement') {
               removeStatement(node);
               this.skip();
             } else if (node.type === 'DebuggerStatement') {
@@ -111,34 +118,15 @@ export default function afterEffectsJsx(options = {}) {
             }
           },
         });
-
-        // Change declarations to
-        // object property/methods
-        walk(ast, {
-          enter(node, parent) {
-            Object.defineProperty(node, 'parent', {
-              value: parent,
-              enumerable: false,
-              configurable: true,
-            });
-            if (node.type === 'FunctionDeclaration') {
-              this.skip();
-            } else if (
-              // is un-named export
-              node.type === 'VariableDeclaration'
-            ) {
-              // removeStatement(node);
-              this.skip();
-            }
-          },
-        });
-
         // Log exports to the terminal
         console.log(`Exported JSX:`, exports);
         // Wrap in braces
-        // magicString.prepend('{').append('}');
-        code = magicString.toString();
-        bundle[file].code = code;
+        magicString
+          .trim()
+          .indent()
+          .prepend('{\n')
+          .append('\n}');
+        bundle[file].code = magicString.toString();
       }
     },
   };
