@@ -1,13 +1,9 @@
 
 
-var expressionGlobalsTypescript = require('expression-globals-typescript');
-
 const someValue = 2;
 function someFunction() {
     return 'hi';
 }
-
-const thisComp = new expressionGlobalsTypescript.Comp();
 function getLayerDuration(layerName) {
     const layer = thisComp.layer(layerName);
     return layer.outPoint - layer.inPoint;

@@ -42,8 +42,9 @@ export default function afterEffectsJsx(options = {}) {
             magicString.overwrite(node.start, node.end, '(void 0);');
           }
         }
-        console.log(ast);
-        // Find exports
+
+        // Find exports by looking for expressions
+        // that are exports.[exportName] = [exportName];
         walk(ast, {
           enter(node, parent) {
             Object.defineProperty(node, 'parent', {
@@ -53,143 +54,92 @@ export default function afterEffectsJsx(options = {}) {
             });
 
             if (
-              // is un-named export
-              node.type === 'ExportNamedDeclaration' &&
-              node.declaration === null
+              // it's an export expression statement
+              node.type === 'ExpressionStatement' &&
+              node.expression.type === 'AssignmentExpression'
             ) {
-              node.specifiers.forEach(specifier =>
-                exports.push(specifier.local.name)
-              );
-              remove(node.start, node.end);
-              this.skip();
+              if (node.expression.left.object.name === 'exports') {
+                exports.push(node.expression.right.name);
+              }
             }
           },
         });
 
         // Remove non exported nodes
-        // walk(ast, {
-        //   enter(node, parent) {
-        //     Object.defineProperty(node, 'parent', {
-        //       value: parent,
-        //       enumerable: false,
-        //       configurable: true,
-        //     });
+        walk(ast, {
+          enter(node, parent) {
+            Object.defineProperty(node, 'parent', {
+              value: parent,
+              enumerable: false,
+              configurable: true,
+            });
 
-        //     // Remove non-exported functions
-        //     if (node.type === 'FunctionDeclaration') {
-        //       const functionName = node.id.name;
-        //       if (!exports.includes(functionName)) {
-        //         remove(node.start, node.end);
-        //       }
-        //       this.skip();
-        //       // Remove variables that aren't exported
-        //     } else if (node.type === 'VariableDeclaration') {
-        //       const variableName = node.declarations.map(
-        //         declaration => declaration.id.name
-        //       )[0];
-        //       if (!exports.includes(variableName)) {
-        //         remove(node.start, node.end);
-        //         this.skip();
-        //       }
-        //     }
-        //   },
-        // });
+            // Remove non-exported functions
+            if (node.type === 'FunctionDeclaration') {
+              const functionName = node.id.name;
+              if (!exports.includes(functionName)) {
+                remove(node.start, node.end);
+              }
+              this.skip();
+              // Remove variables that aren't exported
+            } else if (node.type === 'VariableDeclaration') {
+              const variableName = node.declarations.map(
+                declaration => declaration.id.name
+              )[0];
+              if (!exports.includes(variableName)) {
+                remove(node.start, node.end);
+                this.skip();
+              }
+            }
+          },
+        });
 
         // Remove expression and debugger statements
-        // walk(ast, {
-        //   enter(node, parent) {
-        //     Object.defineProperty(node, 'parent', {
-        //       value: parent,
-        //       enumerable: false,
-        //       configurable: true,
-        //     });
-        //     if (node.type === 'ExpressionStatement') {
-        //       removeStatement(node);
-        //       this.skip();
-        //     } else if (node.type === 'DebuggerStatement') {
-        //       removeStatement(node);
-        //       this.skip();
-        //     }
-        //   },
-        // });
+        walk(ast, {
+          enter(node, parent) {
+            Object.defineProperty(node, 'parent', {
+              value: parent,
+              enumerable: false,
+              configurable: true,
+            });
+            if (node.type === 'ExpressionStatement') {
+              removeStatement(node);
+              this.skip();
+            } else if (node.type === 'DebuggerStatement') {
+              removeStatement(node);
+              this.skip();
+            }
+          },
+        });
 
-        // // Change declarations to
-        // // object property/methods
-        // walk(ast, {
-        //   enter(node, parent) {
-        //     Object.defineProperty(node, 'parent', {
-        //       value: parent,
-        //       enumerable: false,
-        //       configurable: true,
-        //     });
+        // Change declarations to
+        // object property/methods
+        walk(ast, {
+          enter(node, parent) {
+            Object.defineProperty(node, 'parent', {
+              value: parent,
+              enumerable: false,
+              configurable: true,
+            });
+            if (node.type === 'FunctionDeclaration') {
+              this.skip();
+            } else if (
+              // is un-named export
+              node.type === 'VariableDeclaration'
+            ) {
+              // removeStatement(node);
+              this.skip();
+            }
+          },
+        });
 
-        //     if (
-        //       // is un-named export
-        //       node.type === 'VariableDeclaration'
-        //     ) {
-        //       // remove(node.start, node.declarations[0].start);
-        //       this.skip();
-        //     }
-        //   },
-        // });
         // Log exports to the terminal
         console.log(`Exported JSX:`, exports);
+        // Wrap in braces
+        // magicString.prepend('{').append('}');
         code = magicString.toString();
         bundle[file].code = code;
       }
     },
   };
-}
-
-function removeBundlerCode(code) {
-  return code.replace("'use strict';", '');
-}
-
-function wrapExportsInQuotes(exports, code) {
-  let newCode = code;
-  exports.forEach(name => {
-    newCode = newCode
-      .replace(`function ${name}`, `"${name}": function`)
-      .replace(`const ${name} =`, `"${name}": `)
-      .replace(`let ${name} =`, `"${name}": `)
-      .replace(`var ${name} =`, `"${name}": `)
-      .replace(`}\n"${name}"`, `}\n"${name}"`)
-      .replace(`;\n"${name}"`, `,\n"${name}"`);
-  });
-  return newCode;
-}
-
-function separateExportsWithCommas(exports, code) {
-  let codeLines = code.split('\n');
-  const fixedLines = codeLines.map((line, lineIndex) => {
-    let newLine = line;
-    exports.forEach((name, exportIndex) => {
-      if (line.startsWith(`"${name}"`)) {
-        newLine = newLine.replace(
-          ';',
-          exportIndex === exports.length ? ',' : ''
-        );
-      }
-    });
-    if (newLine === '}' && lineIndex !== codeLines.length) {
-      newLine = '},';
-    }
-    return newLine;
-  });
-  return fixedLines.join('\n');
-}
-
-function indentAllLines(code) {
-  return code
-    .split('\n')
-    .map(line => `	${line}`)
-    .join('\n');
-}
-
-function wrapInBrackets(code) {
-  return `{\n	${code.trim()}\n}`;
-}
-
-function removeComments(code) {
-  return code.replace(/^\/\/.+/gm, '');
 }
