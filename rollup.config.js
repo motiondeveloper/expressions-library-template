@@ -9,6 +9,7 @@ export default {
     file: pkg.main,
     format: 'es',
   },
+  external: Object.keys(pkg.dependencies),
   plugins: [
     replace({
       _npmVersion: pkg.version,
