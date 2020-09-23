@@ -7,7 +7,7 @@ export default {
   input: 'src/index.ts',
   output: {
     file: pkg.main,
-    format: 'cjs',
+    format: 'es',
   },
   plugins: [
     replace({

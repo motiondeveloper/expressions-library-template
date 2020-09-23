@@ -66,66 +66,66 @@ export default function afterEffectsJsx(options = {}) {
         });
 
         // Remove non exported nodes
-        walk(ast, {
-          enter(node, parent) {
-            Object.defineProperty(node, 'parent', {
-              value: parent,
-              enumerable: false,
-              configurable: true,
-            });
+        // walk(ast, {
+        //   enter(node, parent) {
+        //     Object.defineProperty(node, 'parent', {
+        //       value: parent,
+        //       enumerable: false,
+        //       configurable: true,
+        //     });
 
-            if (node.type === 'FunctionDeclaration') {
-              const functionName = node.id.name;
-              if (!exports.includes(functionName)) {
-                // Remove non-exported functions
-                remove(node.start, node.end);
-              } else {
-                console.log(node);
-                magicString.remove(node.start, node.id.start);
-                magicString.prependRight(node.end, ',');
-              }
-              this.skip();
-            } else if (node.type === 'VariableDeclaration') {
-              const variableName = node.declarations.map(
-                declaration => declaration.id.name
-              )[0];
-              if (!exports.includes(variableName)) {
-                // Remove variables that aren't exported
-                remove(node.start, node.end);
-              } else {
-                const valueStart = node.declarations[0].init.start;
-                const variableName = node.declarations[0].id.name;
-                magicString.overwrite(
-                  node.start,
-                  valueStart - 1,
-                  `${variableName}:`
-                );
-                const endsInSemiColon =
-                  magicString.slice(node.end - 1, node.end) === ';';
-                if (endsInSemiColon) {
-                  magicString.overwrite(node.end - 1, node.end, ',');
-                } else {
-                  magicString.prependRight(node.end, ',');
-                }
-              }
-              this.skip();
-            } else if (node.type === 'ExpressionStatement') {
-              removeStatement(node);
-              this.skip();
-            } else if (node.type === 'DebuggerStatement') {
-              removeStatement(node);
-              this.skip();
-            }
-          },
-        });
-        // Log exports to the terminal
-        console.log(`Exported JSX:`, exports);
-        // Wrap in braces
-        magicString
-          .trim()
-          .indent()
-          .prepend('{\n')
-          .append('\n}');
+        //     if (node.type === 'FunctionDeclaration') {
+        //       const functionName = node.id.name;
+        //       if (!exports.includes(functionName)) {
+        //         // Remove non-exported functions
+        //         remove(node.start, node.end);
+        //       } else {
+        //         console.log(node);
+        //         magicString.remove(node.start, node.id.start);
+        //         magicString.prependRight(node.end, ',');
+        //       }
+        //       this.skip();
+        //     } else if (node.type === 'VariableDeclaration') {
+        //       const variableName = node.declarations.map(
+        //         declaration => declaration.id.name
+        //       )[0];
+        //       if (!exports.includes(variableName)) {
+        //         // Remove variables that aren't exported
+        //         remove(node.start, node.end);
+        //       } else {
+        //         const valueStart = node.declarations[0].init.start;
+        //         const variableName = node.declarations[0].id.name;
+        //         magicString.overwrite(
+        //           node.start,
+        //           valueStart - 1,
+        //           `${variableName}:`
+        //         );
+        //         const endsInSemiColon =
+        //           magicString.slice(node.end - 1, node.end) === ';';
+        //         if (endsInSemiColon) {
+        //           magicString.overwrite(node.end - 1, node.end, ',');
+        //         } else {
+        //           magicString.prependRight(node.end, ',');
+        //         }
+        //       }
+        //       this.skip();
+        //     } else if (node.type === 'ExpressionStatement') {
+        //       removeStatement(node);
+        //       this.skip();
+        //     } else if (node.type === 'DebuggerStatement') {
+        //       removeStatement(node);
+        //       this.skip();
+        //     }
+        //   },
+        // });
+        // // Log exports to the terminal
+        // console.log(`Exported JSX:`, exports);
+        // // Wrap in braces
+        // magicString
+        //   .trim()
+        //   .indent()
+        //   .prepend('{\n')
+        //   .append('\n}');
         bundle[file].code = magicString.toString();
       }
     },
