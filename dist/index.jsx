@@ -2,7 +2,7 @@
     someValue: 2,
     someFunction() {
         return 'hi';
-    }
+    },
     getLayerDuration(layerName) {
         const layer = thisComp.layer(layerName);
         return layer.outPoint - layer.inPoint + time;

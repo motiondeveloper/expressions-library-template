@@ -95,7 +95,7 @@ export default function afterEffectsJsx(options = {}) {
                 // remove the function keyword
                 magicString.remove(node.start, node.id.start);
                 // add a trailing comma
-                magicString.prependRight(node.end, ',');
+                magicString.appendLeft(node.end, ',');
               }
               // don't process child nodes
               this.skip();
@@ -124,7 +124,7 @@ export default function afterEffectsJsx(options = {}) {
                   magicString.overwrite(node.end - 1, node.end, ',');
                 } else {
                   // or add trailing comma
-                  magicString.prependRight(node.end, ',');
+                  magicString.appendLeft(node.end, ',');
                 }
               }
               // don't process child nodes
