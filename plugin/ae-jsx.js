@@ -20,6 +20,7 @@ export default function afterEffectsJsx(options = {}) {
       for (const file in bundle) {
         // Get the string code of the file
         let code = bundle[file].code;
+        // generate AST to walk through
         let ast;
         try {
           ast = this.parse(code);
@@ -27,8 +28,10 @@ export default function afterEffectsJsx(options = {}) {
           err.message += ` in ${file}`;
           throw err;
         }
+        // create magic string to perform operations on
         const magicString = new MagicString(code);
 
+        // removes characters from the magicString
         function remove(start, end) {
           while (whitespace.test(code[start - 1])) start -= 1;
           magicString.remove(start, end);
@@ -40,6 +43,7 @@ export default function afterEffectsJsx(options = {}) {
           );
         }
 
+        // removes entire statements
         function removeStatement(node) {
           const { parent } = node;
 
@@ -135,12 +139,13 @@ export default function afterEffectsJsx(options = {}) {
         });
         // Log exports to the terminal
         console.log(`Exported JSX:`, exports);
-        // Wrap in braces
+        // Sanitize output and wrap in braces
         magicString
           .trim()
           .indent()
           .prepend('{\n')
           .append('\n}');
+        // Replace the files code with modified
         bundle[file].code = magicString.toString();
       }
     },
