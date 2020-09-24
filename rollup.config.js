@@ -21,7 +21,6 @@ export default {
       noImplicitAny: true,
       moduleResolution: 'node',
       strict: true,
-      lib: ['esnext'],
     }),
     afterEffectJsx(),
   ],
