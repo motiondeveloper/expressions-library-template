@@ -16,16 +16,17 @@
 
 ## Why?
 
-> At [Motion Developer](https://motiondeveloper.com) we maintain a lot of expression (`.jsx`) libraries, such as [`eKeys`](https://github.com/motiondeveloper/eKeys), [`eBox`](https://github.com/motiondeveloper/eBox), and [`aeFunctions`](https://github.com/motiondeveloper/aeFunctionsd).
->
-> This allows us to:
->
-> - Share code between expressions and projects
-> - Edit code in powerful editor (such as [VS Code](https://code.visualstudio.com/))
-> - [Improve performance](https://helpx.adobe.com/after-effects/using/legacy-and-extend-script-engine.html#syntax-requirements-expression-libraries)
-> - Build abstractions for complex tasks
+At [Motion Developer](https://motiondeveloper.com) we maintain a lot of expression (`.jsx`) libraries, such as [`eKeys`](https://github.com/motiondeveloper/eKeys), [`eBox`](https://github.com/motiondeveloper/eBox), and [`aeFunctions`](https://github.com/motiondeveloper/aeFunctionsd). This allows us to:
 
-**This repo is a template for creating After Effects expression libraries, that enables you to:**
+- Share code between expressions and projects
+- Edit code in powerful editor (such as [VS Code](https://code.visualstudio.com/))
+- [Improve performance](https://helpx.adobe.com/after-effects/using/legacy-and-extend-script-engine.html#syntax-requirements-expression-libraries)
+- Build abstractions for complex tasks
+
+> For more info on writing expressions in `.jsx` files, see our article:
+> [How to write expressions in external jsx files](https://motiondeveloper.com/blog/write-expressions-external-files/)
+
+#### This repo is a template for creating After Effects expression libraries, that enables you to:
 
 - Write in [TypeScript](https://www.typescriptlang.org/) (`.ts` files)
 - Split expressions into multiple files, to be bundled at build time
