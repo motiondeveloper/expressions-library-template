@@ -1,4 +1,6 @@
 {
+    fromOtherFile: 'value in another file',
+
     // Importing object bases (CompBase, LayerBase, PropertyBase)
     // Creating a new composition object from CompBase
     // Using the expression types in a function

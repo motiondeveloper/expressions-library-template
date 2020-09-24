@@ -2,6 +2,7 @@
 // TypeScript types (Layer, Comp, Value, Color etc)
 // and global functions from 'expression-globals-typescript'
 import { Comp, Layer, linear } from 'expression-globals-typescript';
+import { fromOtherFile } from './otherFile';
 
 // Creating a new composition object from CompBase
 const thisComp = new Comp();
@@ -26,4 +27,4 @@ const someValue: number = 2;
 const version: string = '_npmVersion';
 
 // Export values to appear in jsx files
-export { getLayerDuration, remap, welcome, someValue, version };
+export { getLayerDuration, remap, welcome, someValue, version, fromOtherFile };
