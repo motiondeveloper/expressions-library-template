@@ -28,6 +28,7 @@
 **This repo is a template for creating After Effects expression libraries, that enables you to:**
 
 - Write in [TypeScript](https://www.typescriptlang.org/) (`.ts` files)
+- Split expressions into multiple files, to be bundled at build time
 - Write syntactically correct JavaScript, allowing:
   - [Testing](#testing)
   - Linting
@@ -41,8 +42,6 @@ To use this template you need to have the following installed on your system:
 - [Git](https://git-scm.com/)
 - [VS Code](https://code.visualstudio.com/) (recommended)
 - [GitHub CLI](https://github.com/cli/cli) (recommended)
-
-> This setup works well for our workflow and requirements, but is still in the early stages. It is most likely unnecessary for smaller projects or beginners
 
 ## Using the template
 
@@ -75,7 +74,7 @@ To use this template you need to have the following installed on your system:
 
    _You can run also run a once off build:_ `npm run build`
 
-5. **Edit the `src` file**
+5. **Edit the `src` files**
 
    _The `index.ts` contains an example expression setup._
 
@@ -186,7 +185,5 @@ There a couple of files you may wish to change to reflect the content of your pr
 - The Rollup [Typescript plugin](https://www.npmjs.com/package/@rollup/plugin-typescript) runs the TypeScript compiler
 
 - The Rollup plugin [rollup-plugin-ae-jsx](https://www.npmjs.com/package/rollup-plugin-ae-jsx) transforms the JavaScript output into After Effects JSON (`.jsx`) compliant syntax
-
-  _The rollup plugin is still experimental, and updated regularly. It currently doesn't allow for splitting your expression into multiple files_
 
 - Testing via [Jest](https://jestjs.io/), and [ts-jest](https://github.com/kulshekhar/ts-jest)
