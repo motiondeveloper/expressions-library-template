@@ -1,11 +1,12 @@
 // Importing object bases (CompBase, LayerBase, PropertyBase)
 // TypeScript types (Layer, Comp, Value, Color etc)
 // and global functions from 'expression-globals-typescript'
-import { Comp, Layer, linear } from 'expression-globals-typescript';
+import { Comp, Layer } from 'expression-globals-typescript';
 import { fromOtherFile } from './otherFile';
 
 // Creating a new composition object from CompBase
 const thisComp = new Comp();
+const thisLayer = new Layer();
 
 // Using the expression types in a function
 function getLayerDuration(layerName: string) {
@@ -15,7 +16,7 @@ function getLayerDuration(layerName: string) {
 
 // Using expressions global functions
 function remap(value: number) {
-  return linear(value, 0, 10, 0, 1);
+  return thisLayer.linear(value, 0, 10, 0, 1);
 }
 
 function welcome(name: string): string {

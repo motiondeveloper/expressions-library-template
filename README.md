@@ -126,16 +126,6 @@ const thisProperty = new Property<Vector>([0, 100]);
 
 > The `Property` constructor takes a value to set as the property value, and a type (`<>`) to set as the type for the property.
 
-### Global Functions and Variables
-
-You can import any global functions available in expressions, fully typed, from the same package:
-
-```ts
-import { time, linear } from 'expression-globals-typescript';
-```
-
-> VS Code should prompt you to auto import these when you reference them.
-
 ### After Effects Types
 
 You can import After Effect's specific types such as `Color` and `Vector` from the package to properly type your expressions.
